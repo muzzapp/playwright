@@ -1,10 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
-  await page.goto('https://social.muzz.com/en-GB/post/pos_2youlAHFvXjjQVn45hxXMBXT1JQ/?referrer=srf_2Zl2yqrNQ3X4nfmQjs7bgHqjyB0&location=feed&t=1750757673');
-});
-
 test('I can see the post, tap follow and download the app', async ({ page }) => {
+  await page.goto('https://social.muzz.com/en-GB/post/pos_2youlAHFvXjjQVn45hxXMBXT1JQ/?referrer=srf_2Zl2yqrNQ3X4nfmQjs7bgHqjyB0&location=feed&t=1750757673');
   await page.getByTestId('post-context-author').isVisible()
   await page.getByTestId('post-context').getByText('Likes').click();
   await page.getByTestId('post-context').getByText('Share').click();
@@ -21,3 +18,13 @@ test('I can see the post, tap follow and download the app', async ({ page }) => 
   await page2.locator('#Header').getByRole('link', { name: 'Google Play icon' }).click();
   const page3 = await page3Promise;
 });
+
+test('I can view comments', async ({ page }) => {
+  await page.goto('https://social.muzz.com/en-GB/post/pos_2ydflOJTNpp2dTkOZRJkB63CAXi/?referrer=srf_2Zl2yt99BN0U0S31SGr3aUmjSUn&location=feed');
+
+  const taifLocator = page.getByRole('link', { name: 'Ahsan Taif @taif 9 days ago' });
+
+  await expect(taifLocator).toBeVisible();
+  await taifLocator.scrollIntoViewIfNeeded();
+});
+
