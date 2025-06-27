@@ -21,3 +21,22 @@ test('I can see the post, tap follow and download the app', async ({ page }) => 
   await page2.locator('#Header').getByRole('link', { name: 'Google Play icon' }).click();
   const page3 = await page3Promise;
 });
+
+
+//This defines a test with the name "I can tap to open app".
+//The test function gets access to a page object — this represents the browser (or app) page that Playwright is controlling.
+test('I can tap to open app', async ({ page }) => {
+
+  //this finds elements on the page that contain a button and have accessbale name 'Open App'
+  // 'Open App' is in two places so ".first" finds the first one in the page'.
+  await page.getByRole('button', { name: 'Open app' }).first().click();
+  await page.getByText('read more').click();
+});
+
+//This is a test to tap the comment thread of a post then tapping 'Get the App'
+test('I can navigte to thread', async ({ page }) => {
+  await page.getByText('read more').click();
+  await page.getByText('711').click();
+  await page.getByRole('button', {name:'Get the app'}).click();
+  await expect(page).toHaveTitle(/Muzz Social/);
+});
