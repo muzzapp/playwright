@@ -20,4 +20,5 @@ test('I can see the post, tap follow and download the app', async ({ page }) => 
   const page3Promise = page2.waitForEvent('popup');
   await page2.locator('#Header').getByRole('link', { name: 'Google Play icon' }).click();
   const page3 = await page3Promise;
+  await page.getByRole('test');
 });
