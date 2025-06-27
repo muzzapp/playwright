@@ -1,10 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
-  await page.goto('https://social.muzz.com/en-GB/post/pos_2youlAHFvXjjQVn45hxXMBXT1JQ/?referrer=srf_2Zl2yqrNQ3X4nfmQjs7bgHqjyB0&location=feed&t=1750757673');
-});
-
 test('I can see the post, tap follow and download the app', async ({ page }) => {
+  await page.goto('https://social.muzz.com/en-GB/post/pos_2youlAHFvXjjQVn45hxXMBXT1JQ/?referrer=srf_2Zl2yqrNQ3X4nfmQjs7bgHqjyB0&location=feed&t=1750757673');
   await page.getByTestId('post-context-author').isVisible()
   await page.getByTestId('post-context').getByText('Likes').click();
   await page.getByTestId('post-context').getByText('Share').click();
@@ -22,21 +19,12 @@ test('I can see the post, tap follow and download the app', async ({ page }) => 
   const page3 = await page3Promise;
 });
 
+test('I can view comments', async ({ page }) => {
+  await page.goto('https://social.muzz.com/en-GB/post/pos_2ydflOJTNpp2dTkOZRJkB63CAXi/?referrer=srf_2Zl2yt99BN0U0S31SGr3aUmjSUn&location=feed');
 
-//This defines a test with the name "I can tap to open app".
-//The test function gets access to a page object — this represents the browser (or app) page that Playwright is controlling.
-test('I can tap to open app', async ({ page }) => {
+  const taifLocator = page.getByRole('link', { name: 'Ahsan Taif @taif 9 days ago' });
 
-  //this finds elements on the page that contain a button and have accessbale name 'Open App'
-  // 'Open App' is in two places so ".first" finds the first one in the page'.
-  await page.getByRole('button', { name: 'Open app' }).first().click();
-  await page.getByText('read more').click();
+  await expect(taifLocator).toBeVisible();
+  await taifLocator.scrollIntoViewIfNeeded();
 });
 
-//This is a test to tap the comment thread of a post then tapping 'Get the App'
-test('I can navigte to thread', async ({ page }) => {
-  await page.getByText('read more').click();
-  await page.getByText('711').click();
-  await page.getByRole('button', {name:'Get the app'}).click();
-  await expect(page).toHaveTitle(/Muzz Social/);
-});
