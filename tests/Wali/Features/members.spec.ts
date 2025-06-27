@@ -15,7 +15,6 @@ test.beforeEach(async ({ page }) => {
 
 
 test('I can search for a member', async ({ page }) => {
- // await page.locator('tag[attribute="/engineering"]').click();
   await page.getByPlaceholder('Search').click();
   await page.getByPlaceholder('Search').fill('tarek+3@muzz.com');
   await page.getByRole('button', { name: 'Search' }).click();
@@ -23,7 +22,6 @@ test('I can search for a member', async ({ page }) => {
 });
 
 test('I can generate 10 compliments for member', async ({ page }) => {
- // await page.locator('tag[attribute="/engineering"]').click();
   await page.getByPlaceholder('Search').click();
   await page.getByPlaceholder('Search').fill('tarek+3@muzz.com');
   await page.getByRole('button', { name: 'Search' }).click();
@@ -31,5 +29,14 @@ test('I can generate 10 compliments for member', async ({ page }) => {
   await page.getByText('Take an action').click(); 
   await page.getByText('Generate 10 Compliments').click();
   await page.getByRole('button', { name: 'Confirm' }).click();
+});
 
+test('I can generate likes for member', async ({ page }) => {
+  await page.getByPlaceholder('Search').click();
+  await page.getByPlaceholder('Search').fill('tarek+3@muzz.com');
+  await page.getByRole('button', { name: 'Search' }).click();
+  await page.getByRole('link', { name: 'Tee++3' }).click();
+  await page.getByText('Take an action').click(); 
+  await page.getByText('Generate Likes').click();
+  await page.getByRole('button', { name: 'Confirm' }).click();
 });
